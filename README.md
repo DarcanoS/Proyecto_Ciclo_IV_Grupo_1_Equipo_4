@@ -2,3 +2,4 @@
 Grupo 4 conformado por:
 Stivel Pinilla
 Andrea Giraldo
+Oscar Arbelaez
