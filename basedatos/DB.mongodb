@@ -1,0 +1,128 @@
+// De acuerdo al esquema de la base de datos ya planteada se utiliza
+//comandos de mongo para realizar la base de datos.
+
+//-----------------------------Creacion-------------------------
+
+//Usaremos la DB dbProyecto
+use dbProyecto
+
+//Creamos un usuario y constraseña.
+db.credenciales.insertOne({
+  _id:1,
+  usuario:"Joselito",
+  clave:"1234"
+})
+
+//Al usuario y constraseña que acabamos de ingresar se lo asignaremos
+//a un nuevo investigador.
+db.investigadores.insertOne({
+  _id:1,
+  nombreInvestigador:"Jose Pastrana",
+  credenciales_id:1 //Con este atributo podemos relacioner las credenciales con el investigador
+})
+
+
+//Creamos un proyecto el cual tiene a cargo el investigador que ya creamos
+db.proyectos.insertOne({ 
+  _id:1,
+  nombreProyecto: 'Investigacion sobre desarrollo humano', 
+  descripcionProyecto: 'Proyecto sobre la investigacion sobre desarrollo humano',
+  estadoProyecto:'Activo',
+  objetivos:{
+    generales:'Investigar',
+    especificos:'Seguir investigando'
+  },
+  presupuesto:2000000,
+  director_id: 1, // Con este atributo podemos relacionar el proyecto con el investigador
+  fecha:{
+    inicio:new Date('2020-03-01T08:00:00Z'),
+    finalizacion:new Date('2021-03-01T08:00:00Z'),
+    creacion:new Date()
+  }
+
+})
+
+//Como ya creamos un proyecto le asignaremos el proyecto al investigador y su intensidad horaria
+db.investigadores.updateOne(
+  {_id:1},
+  {$set:{
+    proyectoCargo:{
+      proyecto_id:1,
+      intensidad:12
+    }
+  }}
+)
+
+//Ahora agregaramos uno savances al unico proyecto creado
+db.proyectos.updateOne(
+  {_id:1},
+  {$set:{
+    avances:{
+      avance_id:1,
+      fecha:new Date(),
+      descrpcion:'Hasta ahora iniciamos el proyecto',
+      desempeño:'Excelente'
+    }
+  }}
+)
+
+
+//Creamos otro usuario y constraseña.
+db.credenciales.insertOne({
+  _id:2,
+  usuario:"Andresito",
+  clave:"4321"
+})
+
+//Al usuario y constraseña que acabamos de ingresar se lo asignaremos
+//a un nuevo estudiante.
+db.estudiantes.insertOne({
+  _id:1,
+  nombreEstudiante:"Andres Contreras",
+  carreraEstudiante:"Humanidades",
+  celularEstudiante:"3175585885",
+  fechaIngreso: new Date('2015-03-01T08:00:00Z'),
+  cedula: "254546845",
+  estadoEstudiante: "Matriculado",
+  proyectos_id:[1], 
+  credenciales_id:2 
+})
+
+
+
+//-----------------------------Insert many-------------------------
+//Insertar varias credenciales
+db.credenciales.insertMany([
+  {_id:3,usuario:"jorgito",clave:"1234"},
+  {_id:4,usuario:"carlitos",clave:"1234"},
+  {_id:5,usuario:"caro_23", clave:"abdc"}
+])
+
+//Insertar varios estudiantes
+db.estudiantes.insertMany([
+ {_id:2,
+   nombreEstudiante:"Jorge Contreras",
+  carreraEstudiante:"Humanidades",
+  celularEstudiante:"3175585885",
+  fechaIngreso: new Date('2015-03-01T08:00:00Z'),
+  cedula: "2545432895",
+  estadoEstudiante: "Matriculado",
+  proyectos_id:[1], 
+  credenciales_id:3 },
+
+   {_id:3,
+   nombreEstudiante:"Carlos Cifuentes",
+  carreraEstudiante:"Humanidades",
+  celularEstudiante:"3205585885",
+  fechaIngreso: new Date('2015-03-01T08:00:00Z'),
+  cedula: "1845432895",
+  estadoEstudiante: "Matriculado",
+  proyectos_id:[1], 
+  credenciales_id:3 }
+])
+
+
+//-----------------------------Trear Informacion-------------------------
+db.estudiantes.find({proyectos_id:1},{nombreEstudiante:1}) //Nombre de estudantes que pertenecen al proyecto 1
+db.credenciales.find()// Retorna todas las credenciales
+db.proyectos.find({_id:1},{"avances.descrpcion":1}) // Retorna los avances del proyecto 1
