@@ -39,7 +39,7 @@ db.proyectos.insertOne({
     finalizacion:new Date('2021-03-01T08:00:00Z'),
     creacion:new Date()
   }
-  //avances:
+
 })
 
 //Como ya creamos un proyecto le asignaremos el proyecto al investigador y su intensidad horaria
@@ -84,28 +84,45 @@ db.estudiantes.insertOne({
   fechaIngreso: new Date('2015-03-01T08:00:00Z'),
   cedula: "254546845",
   estadoEstudiante: "Matriculado",
-  proyectos_id:[1], //Con este atributo podemos reconocer los proyextos donde esta el estudiante
-  credenciales_id:2 //Con este atributo podemos relacioner las credenciales con el estudiante
+  proyectos_id:[1], 
+  credenciales_id:2 
 })
 
 
 
-//-----------------------------Trear Informacion-------------------------
+//-----------------------------Insert many-------------------------
+//Insertar varias credenciales
+db.credenciales.insertMany([
+  {_id:3,usuario:"jorgito",clave:"1234"},
+  {_id:4,usuario:"carlitos",clave:"1234"},
+  {_id:5,usuario:"caro_23", clave:"abdc"}
+])
 
-//Buscaremos el estudiante que este en el proyecto 1
-db.estudiantes.find({proyectos_id:1})
-/*Salida Esperada:
-[
-  {
-    _id: 1,
-    nombreEstudiante: 'Andres Contreras',
-    carreraEstudiante: 'Humanidades',
-    celularEstudiante: '3175585885',
-    fechaIngreso: ISODate("2015-03-01T08:00:00.000Z"),
-    cedula: '254546845',
-    estadoEstudiante: 'Matriculado',
-    proyectos_id: [ 1 ],
-    credenciales_id: 2
-  }
-]
-*/
+//Insertar varios estudiantes
+db.estudiantes.insertMany([
+ {_id:2,
+   nombreEstudiante:"Jorge Contreras",
+  carreraEstudiante:"Humanidades",
+  celularEstudiante:"3175585885",
+  fechaIngreso: new Date('2015-03-01T08:00:00Z'),
+  cedula: "2545432895",
+  estadoEstudiante: "Matriculado",
+  proyectos_id:[1], 
+  credenciales_id:3 },
+
+   {_id:3,
+   nombreEstudiante:"Carlos Cifuentes",
+  carreraEstudiante:"Humanidades",
+  celularEstudiante:"3205585885",
+  fechaIngreso: new Date('2015-03-01T08:00:00Z'),
+  cedula: "1845432895",
+  estadoEstudiante: "Matriculado",
+  proyectos_id:[1], 
+  credenciales_id:3 }
+])
+
+
+//-----------------------------Trear Informacion-------------------------
+db.estudiantes.find({proyectos_id:1},{nombreEstudiante:1}) //Nombre de estudantes que pertenecen al proyecto 1
+db.credenciales.find()// Retorna todas las credenciales
+db.proyectos.find({_id:1},{"avances.descrpcion":1}) // Retorna los avances del proyecto 1
