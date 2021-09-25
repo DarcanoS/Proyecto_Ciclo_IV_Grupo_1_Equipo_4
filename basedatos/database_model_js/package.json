@@ -1,0 +1,17 @@
+{
+  "name": "database_model_js",
+  "version": "1.0.0",
+  "description": "\"Data base CRUD operation with JS and unit testing\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "ancagi",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.4",
+    "express": "^4.17.1",
+    "mocha": "^9.1.2",
+    "mongoose": "^6.0.7"
+  }
+}
