@@ -30,7 +30,7 @@ connection.once('open', () => {
 });
 
 app.get('/', async (req, res) =>{
-    res.status(200).json("App is running correct!")
+    res.status(200).json("App is running correct! - Grupo 1 Equipo 4")
 });
 
 app.listen(PORT, ()=>{
