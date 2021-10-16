@@ -23,6 +23,11 @@ public class InvestigadorCrontroller {
         return investigadorRepository.findAll();
     }
 
+    @GetMapping("/investigador/{investigadorId}")
+    InvestigadoresModel getInvestigador(@PathVariable String investigadorId){
+        return investigadorRepository.findById(investigadorId).get();
+    }
+
     @PostMapping("/investigador/add")
     InvestigadoresModel addInvestigador(@RequestBody InvestigadoresModel investigadoresModel){
         return investigadorRepository.save(investigadoresModel);

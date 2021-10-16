@@ -31,9 +31,16 @@ public class ProyectoController {
         return proyectoRepository.findAll();
     }
 
+    @GetMapping("/proyecto/{proyectoId}")
+    ProyectosModel findProyecto(@PathVariable String proyectoId){
+        return proyectoRepository.findById(proyectoId).get();
+    }
+
     @PostMapping("/proyecto/add")
     ProyectosModel addProyecto(@RequestBody ProyectosModel proyecto){
+
         return proyectoRepository.save(proyecto);
+
     }
 
     @GetMapping("/proyecto/estudiante/{estudianteId}")
