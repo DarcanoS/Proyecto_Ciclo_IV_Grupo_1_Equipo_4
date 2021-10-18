@@ -1,6 +1,6 @@
 package com.mintic.microservice.controllers;
 
-import com.mintic.microservice.models.EstudiantesModel;
+import com.mintic.microservice.models.Estudiantes;
 import com.mintic.microservice.models.InvestigadoresModel;
 import com.mintic.microservice.models.ProyectosModel;
 import com.mintic.microservice.repositories.EstudianteRepository;
@@ -45,7 +45,7 @@ public class ProyectoController {
 
     @GetMapping("/proyecto/estudiante/{estudianteId}")
     ArrayList<ProyectosModel> getProyectosDeEstudiante(@PathVariable String estudianteId){
-        Optional<EstudiantesModel> estudiante = estudianteRepository.findById(estudianteId);
+        Optional<Estudiantes> estudiante = estudianteRepository.findById(estudianteId);
         ArrayList<ProyectosModel> proyectos = new ArrayList<ProyectosModel>();
 
         ArrayList<String> idsProyectos = estudiante.get().getProyectosId();

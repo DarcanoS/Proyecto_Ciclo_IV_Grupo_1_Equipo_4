@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class EstudiantesModel {
+public class Estudiantes {
 
     @Id
     private String estudianteId;
@@ -18,7 +18,7 @@ public class EstudiantesModel {
     private ArrayList<String> proyectosId;
     private String credencialeId;
 
-    public EstudiantesModel(String estudianteId, String nombreEstudiante, String carrera, String celular, Date fechaIngreso, String cedula, ArrayList<String> proyectosId, String credencialeId) {
+    public Estudiantes(String estudianteId, String nombreEstudiante, String carrera, String celular, Date fechaIngreso, String cedula, ArrayList<String> proyectosId, String credencialeId) {
         this.estudianteId = estudianteId;
         this.nombreEstudiante = nombreEstudiante;
         this.carrera = carrera;

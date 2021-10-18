@@ -1,13 +1,12 @@
 package com.mintic.microservice.repositories;
 
-import com.mintic.microservice.models.EstudiantesModel;
+import com.mintic.microservice.models.Estudiantes;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public interface EstudianteRepository extends MongoRepository <EstudiantesModel, String> {
+public interface EstudianteRepository extends MongoRepository <Estudiantes, String> {
 
-    List<EstudiantesModel> findByProyectosId (String proyectosId);
+    List<Estudiantes> findByProyectosId (String proyectosId);
 
 }
