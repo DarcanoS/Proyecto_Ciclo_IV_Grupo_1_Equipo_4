@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { useMutation, gql, useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
 
-import addProyectoDB from "../../../actions/proyectoActions";
+import { addProyectoDB } from "../../actions/userActions";
 
 import {
   Form,
@@ -11,11 +12,11 @@ import {
   Row,
   Col,
   Card,
-  Alert,
-  FloatingLabel,
+  Alert, FloatingLabel
 } from "react-bootstrap";
 
 const Add = (props) => {
+
   const { data } = useQuery(gql`
     query {
       proyectos {
@@ -37,39 +38,7 @@ const Add = (props) => {
       $fechaFinal: String!
       $avances: [String]!
     ) {
-      addCredencial(
-        _id: $_id
-        nombre: $nombre
-        descripcion: $descripcion
-        estado: $estado
-        obGeneral: $obGeneral
-        obEspecificos: $obEspecificos
-        presupuesto: $presupuesto
-        fechaInicio: $fechaInicio
-        fechaFinal: $fechaFinal
-        avances: $avances
-      ) {
-        _id
-        nombre
-        descripcion
-      }
-    }
-  `;
-
-  const UPDATE = gql`
-    mutation UpdateProyecto(
-      $_id: String!
-      $nombre: String!
-      $descripcion: String!
-      $estado: String!
-      $obGeneral: String!
-      $obEspecificos: String!
-      $presupuesto: String!
-      $fechaInicio: String!
-      $fechaFinal: String!
-      $avances: [String]!
-    ) {
-      updateProyecto(
+      addProyecto(
         _id: $_id
         nombre: $nombre
         descripcion: $descripcion
@@ -101,7 +70,7 @@ const Add = (props) => {
     avances: "",
   });
 
-  const [addProyecto, { loading, error }] = useMutation(ADD, {
+  const [addProyecto, {loading, error }] = useMutation(ADD, {
     variables: {
       _id: localStorage._id,
       nombre: form.nombre,
@@ -132,80 +101,25 @@ const Add = (props) => {
     },
   });
 
-  const [updateProyecto, { loading_2, error_2 }] = useMutation(UPDATE, {
-    variables: {
-      _id: form._id,
-      nombre: form.nombre,
-      descripcion: form.descripcion,
-      estado: form.estado,
-      obGeneral: form.obGeneral,
-      obEspecificos: form.obEspecificos,
-      presupuesto: form.presupuesto,
-      fechaInicio: form.fechaInicio,
-      fechaFinal: form.fechaFinal,
-      avances: form.avances,
-    },
-    onCompleted: () => {
-      props.history.push("/");
-      console.log("Se ha actualizadp el proyecto con Exito");
-    },
-    onError: (error_2) => {
-      console.log("Error en el post", error_2);
-      props.actualizarProyecto(
-        form,
-        props,
-        data,
-        error_2,
-        loading,
-        updateProyecto,
-        setValues
-      );
-    },
-  });
-
   //Ingresa los datos del formulario
   const handleInput = (event) => {
     setValues({
       ...form,
       [event.target.name]: event.target.value,
     });
-    console.log(form);
   };
 
-  //Ejecucion del boton
+  //Ejecucion dle boton
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.addProyectoDB(
-      form,
-      props,
-      data,
-      error,
-      loading,
-      addProyecto,
-      setValues
-    );
+    props.addProyectoDB(form, props, data, error, loading, addProyecto, setValues);
     console.log("Se ejecuto el boton para AddProyecto");
-    props.history.push("/add");
-  };
-
-  const actualizar = () => {
-    props.actualizarProyecto(
-      form,
-      props,
-      data,
-      error_2,
-      loading_2,
-      updateProyecto,
-      setValues
-    );
-    console.log("Se ejecuto el boton para actualizarProyecto");
-    props.history.push("/add");
   };
 
   //Retorna una alerta de error
   const showError = () => {
-    if (props.error_add) {
-      return <Alert variant="danger"> {props.error_login} </Alert>;
+    if (props.error_signup) {
+      return <Alert variant="danger"> {props.error_signup} </Alert>;
     }
   };
 
@@ -328,19 +242,11 @@ const Add = (props) => {
                   <Button variant="primary" type="submit" className="mt-3">
                     <span>Agregar Proyecto</span>
                   </Button>{" "}
-                  <Button
-                    variant="primary"
-                    onClick={actualizar}
-                    className="mt-3"
-                  >
-                    <span>Actualizar</span>
-                  </Button>
                 </Col>
               </Form>
             </Card.Body>
             <Card.Footer>
-              *Recuerde que al actualizar se le pedira el ID del proyecto a
-              realizar los cambios
+              <Link to="/update"> Modificar Proyecto</Link>
             </Card.Footer>
           </Card>
         </Col>
@@ -350,7 +256,7 @@ const Add = (props) => {
 };
 
 const mapStatesToProps = (reducers) => {
-  return reducers.proyectoReducer;
+  return reducers.userReducer;
 };
 
 const mapDispathToProps = {

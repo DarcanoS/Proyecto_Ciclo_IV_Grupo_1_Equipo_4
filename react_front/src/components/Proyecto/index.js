@@ -56,6 +56,10 @@ const Proyecto = (props) => {
     props.history.push("/");
   }
 
+ const irAdd = () => {
+   props.history.push("/add");
+ }
+
   if (loading)
     return (
       <Spinner animation="border" role="status">
@@ -68,6 +72,9 @@ const Proyecto = (props) => {
     <Container>
       <Button variant="info" onClick={cerrarSesion}>
         Cerrar Sesion
+      </Button> {'  '}
+      <Button variant="info" onClick={irAdd}>
+        Agregar/Modificar
       </Button>
       <Row xs={2} md={2} className="mt-3">
         {Array.from({ length: data.proyectos.length }).map((_, idx) => (
@@ -116,7 +123,7 @@ const Proyecto = (props) => {
                   </Accordion>
                   This is a longer card with supporting text below as a natural
                   lead-in to additional content. This content is a little bit
-                  longer. {idx}
+                  longer. {idx} 
                 </Card.Text>
               </Card.Body>
             </Card>

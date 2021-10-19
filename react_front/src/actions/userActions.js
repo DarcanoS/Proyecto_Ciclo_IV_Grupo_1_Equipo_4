@@ -102,7 +102,7 @@ export const signUp =
       }
       if (error) {
         dispatch({
-          type: "ERROR_ADD",
+          type: "ERROR_SIGNUP",
           payload: "Error con el Servidor",
         });
       }
@@ -110,14 +110,15 @@ export const signUp =
         dispatch({ type: "USER_LOADING" });
 
         localStorage.setItem("token", "Logeado correctamente");
-        dispatch({ type: "ADD", payload: "Usuario Ingresado" });
+        dispatch({ type: "LOGIN", payload: "Usuario Ingresado" });
 
         try {
           localStorage.setItem("_id", idAsignado(data.proyectos));
+          console.log("ID:", localStorage._id)
           addProyecto();
         } catch {
           dispatch({
-            type: "ERROR_ADD",
+            type: "ERROR_SIGNUP",
             payload: "Error con el Servidor",
           });
         }
@@ -125,7 +126,51 @@ export const signUp =
     } else {
         console.log("FLAAN COMAPOS")
       dispatch({
-        type: "ERROR_ADD",
+        type: "ERROR_SIGNUP",
+        payload: "Debe llenar todos los campos",
+      });
+    }
+  };
+
+
+  export const updateProyectoDB =
+  (form, props, data, error, loading, updateProyecto, setValues) =>
+  async (dispatch) => {
+
+    var verificacion = (form._id !== "");
+    console.log(form)
+    
+    if (verificacion) {
+      if (loading) {
+        dispatch({ type: "USER_LOADING" });
+      }
+      if (error) {
+        dispatch({
+          type: "ERROR_SIGNUP",
+          payload: "Error con el Servidor",
+        });
+      }
+      if (data) {
+        dispatch({ type: "USER_LOADING" });
+
+        localStorage.setItem("token", "Logeado correctamente");
+        dispatch({ type: "LOGIN", payload: "Usuario Ingresado" });
+
+        try {
+          localStorage.setItem("_id", idAsignado(data.proyectos));
+          console.log("ID:", localStorage._id)
+          updateProyecto();
+        } catch {
+          dispatch({
+            type: "ERROR_SIGNUP",
+            payload: "Error con el Servidor",
+          });
+        }
+      }
+    } else {
+        console.log("FLAAN COMAPOS")
+      dispatch({
+        type: "ERROR_SIGNUP",
         payload: "Debe llenar todos los campos",
       });
     }
