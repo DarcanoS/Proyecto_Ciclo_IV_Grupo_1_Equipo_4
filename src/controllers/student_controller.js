@@ -1,4 +1,4 @@
-const Student = require('../models/student_schema');
+const Student = require('../models/estudiante_schema');
 const router = require('express').Router();
 
 router.route('/').get((req, res) => {
