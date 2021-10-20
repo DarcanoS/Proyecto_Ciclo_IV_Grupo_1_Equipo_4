@@ -27,6 +27,7 @@ const Proyecto = (props) => {
         nombre
         descripcion
         fechaInicio
+        obGeneral
       }
       investigadores {
         nombre
@@ -46,6 +47,8 @@ const Proyecto = (props) => {
     }
   `);
 
+  
+
   const cerrarSesion = () =>{
     if (localStorage.token ) {
       localStorage.removeItem("token");
@@ -55,7 +58,7 @@ const Proyecto = (props) => {
     }
     props.history.push("/");
   }
-
+  
  const irAdd = () => {
    props.history.push("/add");
  }
@@ -121,9 +124,7 @@ const Proyecto = (props) => {
                       </Accordion.Body>
                     </Accordion.Item>
                   </Accordion>
-                  This is a longer card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer. {idx} 
+                  Objetivos: {data.proyectos[idx].obGeneral}
                 </Card.Text>
               </Card.Body>
             </Card>
